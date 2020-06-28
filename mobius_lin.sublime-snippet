@@ -1,0 +1,51 @@
+<snippet>
+	<content><![CDATA[
+void linear_sieve()
+{
+	mset(lp,0);
+	prime.clear();
+	loop(i,2,N)
+	{
+		if(lp[i] == 0)
+		{
+			prime.pb(i);
+			lp[i] = i;
+		}
+		
+		for(int j = 0; j < (int)prime.size() && i*prime[j] < N; j++)
+		{
+			lp[i*prime[j]] = prime[j];
+		}
+	}
+}
+ 
+void calculate_mobius()
+{
+	mobius[1] = 1;
+	loop(i,2,N)
+	{
+		mobius[i] = 1;
+		int x = i;
+		int cnt = 0;
+		while(x > 1)
+		{
+			int d = lp[x];
+			x /= d;
+			cnt++;
+			if(x%d == 0)
+			{
+				mobius[i] = 0;
+				break;
+			}
+		}
+		if(mobius[i] != 0 && cnt%2 == 1)mobius[i] = -1;
+	}
+}
+ 
+ 
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mobiuslinear</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

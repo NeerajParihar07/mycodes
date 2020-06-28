@@ -1,0 +1,31 @@
+<snippet>
+	<content><![CDATA[
+
+int dx[] = {-1,1,0,0};
+int dy[] = {0,0,1,-1};
+
+int dfs(int i , int j)
+{
+	if(vis1[i][j] == 1)return 0;
+	int a = mat[i][j];
+	vis1[i][j] = 1;
+	loop(k,0,4)
+	{
+		int nx = i + dx[k];
+		int ny = j + dy[k];
+ 
+		if(nx >= 0 && nx < n && ny >= 0 && ny < m)
+		{
+			if(vec[nx][ny] == '.' && !vis1[nx][ny])a += dfs(nx,ny);
+		}
+	}
+	// vis[i][j] = 0;
+	return a;
+}	
+ 
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mat_dfs</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

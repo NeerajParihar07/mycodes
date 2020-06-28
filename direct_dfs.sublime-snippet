@@ -1,0 +1,29 @@
+<snippet>
+	<content><![CDATA[
+int dfs_stack[N];
+bool ok;
+ 
+void dfs(int x)
+{
+	vis[x]=1;
+	dfs_stack[x] = 1;
+	for(auto& i : vec[x])
+	{
+		if(vis[i.ff]==0)
+		{
+			dfs(i.ff);
+		}
+		else if(dfs_stack[i.ff])
+		{
+			ok  = 1;
+			ans[i.ss]++;
+		}
+	}
+	dfs_stack[x] = 0;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>directed_dfs</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

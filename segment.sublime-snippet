@@ -1,0 +1,94 @@
+<snippet>
+	<content><![CDATA[
+struct info{
+    int x,lazy;
+    info(){
+        x=0;lazy=0;
+    }
+    };
+    struct SegTree{
+    int N;
+    vector<info> st;
+    void init(int n){
+        N=n;
+        st.resize(4*N+5);
+    }
+    void Lazy(int node,int L,int R){
+            st[node].x=st[node].x+st[node].lazy;
+            if(L!=R){
+                st[node*2].lazy=st[node].lazy+st[node*2].lazy;
+                st[node*2+1].lazy=st[node].lazy+st[node*2+1].lazy;
+            }
+            st[node].lazy=0;
+        }
+    void merge(info &cur,info &l,info &r){
+        cur.x=l.x+r.x;
+    }
+    void Build(int node,int L,int R){
+        if(L==R){
+            st[node].x=L;
+            return;
+        }
+        int MM=(L+R)/2;
+        Build(node*2,L,MM);
+        Build(node*2+1,MM+1,R);
+        merge(st[node],st[node*2],st[node*2+1]);
+    }
+    info Query(int node,int L,int R,int i,int j){
+        if(j<L||i>R)return info();
+        Lazy(node,L,R);
+        if(i<=L&&R<=j)return st[node];
+        int MM=(L+R)/2;
+        info left=Query(node*2,L,MM,i,j);
+        info right=Query(node*2+1,MM+1,R,i,j);
+        info cur;
+        merge(cur,left,right);
+        return cur;
+    }
+    void Update(int node,int L,int R,int lpos,int rpos,int val){
+        if(L>rpos||R<lpos)return;
+        Lazy(node,L,R);
+        if(L==lpos&&rpos==R){
+            st[node].x+=val;
+            if(L!=R){
+                st[node*2].lazy+=val;st[node*2+1].lazy+=val;
+            }
+            return;
+        }
+        int MM=(L+R)/2;
+        if(MM>=lpos&&MM<=rpos){
+            Update(node*2,L,MM,lpos,MM,val);
+            Update(node*2+1,MM+1,R,MM+1,rpos,val);
+        }
+        else{
+            Update(node*2,L,MM,lpos,rpos,val);
+            Update(node*2+1,MM+1,R,lpos,rpos,val);
+        }
+        merge(st[node],st[node*2],st[node*2+1]);
+    }
+      void Update1(int node, int L, int R, int pos, int val)
+      {
+          if(L == R)
+          {
+               st[node].x = 0;
+               return;
+          }
+          int M = (L + R)/2;
+          if(pos <= M)
+               Update1(node*2, L, M, pos, val);
+          else
+               Update1(node*2 + 1, M + 1, R, pos, val);
+ 
+          merge(st[node], st[node*2], st[node*2 + 1]);
+      }
+    info query(int l,int r){return Query(1,1,N,l,r);}
+    void update(int lpos,int rpos,int val){Update(1,1,N,lpos,rpos,val);}
+    void update1(int pos, int val) { Update1(1, 1, N, pos, val); }
+    void build(){Build(1,1,N);}
+    };
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>segment_tree</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

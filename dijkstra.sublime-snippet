@@ -1,0 +1,36 @@
+<snippet>
+	<content><![CDATA[
+ 
+void dijkstra(int src, int id){
+ 
+    vector<int> vis(n+1,0); 
+    loop(i,0,n)dist[i][id] = inf;
+    dist[src][id] = 0;
+    multiset < pair < int , int > > s;          
+ 
+    s.insert({0 , src});                    
+ 
+    while(!s.empty()){
+ 
+        pair <int , int> p = *s.begin(); 
+        s.erase(s.begin());
+        int x = p.ss; int wei = p.ff;
+        if( vis[x] ) continue;                  
+         vis[x] = true;
+ 
+        for(int i = 0; i < vec[x].size(); i++){
+            int e = vec[x][i];
+            int w = 1;
+            if(dist[x][id] + w < dist[e][id]){           
+                dist[e][id] = dist[x][id] + w;
+                s.insert({dist[e][id],  e} );           
+            }
+        }
+    }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>dijkstra</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

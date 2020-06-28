@@ -1,0 +1,27 @@
+<snippet>
+	<content><![CDATA[
+void linear_sieve()
+{
+	mset(lp,0);
+	prime.clear();
+	loop(i,2,N)
+	{
+		if(lp[i] == 0)
+		{
+			prime.pb(i);
+			lp[i] = i;
+		}
+		
+		for(int j = 0; j < (int)prime.size() && i*prime[j] < N; j++)
+		{
+			lp[i*prime[j]] = prime[j];
+		}
+	}
+}
+ 
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>linearsieve</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

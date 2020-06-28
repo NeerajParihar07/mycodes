@@ -1,0 +1,37 @@
+<snippet>
+	<content><![CDATA[
+int par[N], sz[N];
+ 
+void build()
+{
+      loop(i,0,n)
+      {
+            par[i] = i;
+            sz[i] = 1;
+      }
+}
+ 
+int find(int a)
+{
+      if( par[a] == a) return a;
+      return par[a] = find(par[a]);
+}
+ 
+void make_union(int a, int b)
+{
+      int pa = find(a);
+      int pb = find(b);
+ 
+      if( pa != pb )
+      {
+            if( sz[pa] < sz[pb] )swap(pa,pb);
+            par[pb] = pa;
+            sz[pa] += sz[pb];
+      }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>dsu</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

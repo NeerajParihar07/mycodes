@@ -1,0 +1,52 @@
+<snippet>
+	<content><![CDATA[
+inline int mul(int a, int b) { return (a * b) % M; };
+inline int add(int a, int b)
+{
+      int res = a + b;
+      if ( res < 0 ) res += M;
+      if ( res >= M) res -= M;
+      return res;
+}
+ 
+int pwr(int a,int b)
+{
+     int res = 1;
+     while(b)
+     {
+          if(b&1) res = (res*a)%M;
+          a = (a*a)%M;
+          b >>= 1;
+     }
+     return res%M;
+}
+ 
+ 
+int inv(int x)
+{
+      return pwr(x,M-2);
+}
+ 
+int divide(int x, int y)
+{
+    return mul(x, inv(y));
+}
+ 
+ 
+int fact[N];
+void getfact()
+{
+    fact[0] = 1;
+    loop(i,1,N) fact[i] = mul(fact[i-1],i);
+}
+ 
+int ncr(int n, int k)
+{
+    return divide(fact[n], mul(fact[k], fact[n - k]));
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ncr</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
